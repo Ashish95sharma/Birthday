@@ -13,19 +13,15 @@ function MessageCard({ isActive }) {
   const curtainHintRef = useRef(null);
   const messageContentRef = useRef(null);
 
-  const message = `[Recipient Name],
+  const message = `Dear Shruti,
 
-Your personalized birthday message goes here.
+Wishing you the happiest birthday! 🎉
 
-You can write multiple paragraphs to express your feelings,
-share memories, and make this special day even more memorable.
+May your day be full of smiles, good surprises, and all the little things that make you feel truly celebrated.
 
-This template supports multiple lines and formatting,
-so feel free to customize it completely to fit your style.
+I hope this year brings you new adventures, success in everything you work for, and lots of moments that make your heart feel light.
 
-Happy Birthday! 🎉
-
-— [Your Name]`;
+Happy Birthday, Shruti. 💗`;
 
   // Handle page transitions
   useEffect(() => {
@@ -170,7 +166,7 @@ Happy Birthday! 🎉
 
   return (
     <section className="message">
-      <h2>💌 A Message From My Heart</h2>
+      <h2>💌 A Message From Me</h2>
 
       <div className="curtain-container">
         <div className="curtain-rod"></div>

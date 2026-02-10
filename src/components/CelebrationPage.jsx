@@ -150,6 +150,33 @@ function CelebrationPage({ onComplete, musicPlayerRef }) {
     }
   }, [showMessageButton]);
 
+  // Animate bunting flags when decorate button is activated
+  useEffect(() => {
+    if (activatedButtons.decorate) {
+      const flags = document.querySelectorAll(".bunting-flag");
+      if (flags.length) {
+        gsap.fromTo(
+          flags,
+          {
+            opacity: 0,
+            y: -20,
+            scale: 0.85,
+            rotation: -4,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            duration: 0.6,
+            stagger: 0.05,
+            ease: "back.out(1.7)",
+          }
+        );
+      }
+    }
+  }, [activatedButtons.decorate]);
+
   // Handle button activation
   const handleButtonClick = (buttonType) => {
     if (activatedButtons[buttonType]) return;
@@ -417,26 +444,28 @@ function CelebrationPage({ onComplete, musicPlayerRef }) {
             {activatedButtons.decorate && (
               <div className="decoration-decorate bunting">
                 <div className="bunting-string">
-                  {[
-                    "H",
-                    "a",
-                    "p",
-                    "p",
-                    "y",
-                    " ",
-                    "B",
-                    "i",
-                    "r",
-                    "t",
-                    "h",
-                    "d",
-                    "a",
-                    "y",
-                  ].map((letter, i) => (
-                    <div key={i} className={`bunting-flag flag-${i % 3}`}>
-                      {letter}
-                    </div>
-                  ))}
+                  <div className="bunting-word">
+                    {["H", "a", "p", "p", "y"].map((letter, i) => (
+                      <div
+                        key={`happy-${i}`}
+                        className={`bunting-flag flag-${i % 3}`}
+                      >
+                        {letter}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="bunting-word">
+                    {["B", "i", "r", "t", "h", "d", "a", "y"].map(
+                      (letter, i) => (
+                        <div
+                          key={`bday-${i}`}
+                          className={`bunting-flag flag-${(i + 5) % 3}`}
+                        >
+                          {letter}
+                        </div>
+                      )
+                    )}
+                  </div>
                 </div>
               </div>
             )}

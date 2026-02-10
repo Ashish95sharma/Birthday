@@ -1,7 +1,7 @@
 /* Celebration Page Styles */
 
 .celebration-page {
-  position: fixed;
+
   top: 0;
   left: 0;
   width: 100vw;
@@ -385,7 +385,7 @@
 /* Bunting: reveal from bottom and stick under lights */
 .bunting {
   position: absolute;
-  top: 45px;
+  top: 60px;
   left: 0;
   width: 100%;
   padding: 5px 10px;
@@ -397,10 +397,18 @@
 
 .bunting-string {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  max-width: 100%;
+}
+
+.bunting-word {
+  display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 5px;
-  flex-wrap: nowrap;
 }
 
 /* Keep flags sizing small for space */
@@ -649,6 +657,20 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .celebration-page {
+    padding: 16px;
+  }
+
+  .slides-container {
+    max-width: 100%;
+    padding: 28px 20px;
+  }
+
+  .question-options {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .celebration-title {
     font-size: 2rem;
   }
@@ -731,6 +753,14 @@
   .slides-container {
     padding: 20px 15px;
     max-width: 100%;
+  }
+
+  .bunting {
+    padding: 5px 6px;
+  }
+
+  .bunting-string {
+    gap: 3px;
   }
 
   .celebration-buttons {
