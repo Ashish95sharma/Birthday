@@ -11,37 +11,38 @@ function Gallery({ isActive }) {
   const lightboxImgRef = useRef(null);
 
   const photos = [
-    { src: "/images/pic1.jpeg", alt: "Memory 1" },
-    { src: "/images/pic2.jpeg", alt: "Memory 2" },
-    { src: "/images/pic3.jpeg", alt: "Memory 3" },
-    { src: "/images/pic4.jpeg", alt: "Memory 4" },
-    { src: "/images/pic5.jpeg", alt: "Memory 5" },
-    { src: "/images/pic6.jpeg", alt: "Memory 6" },
+    { src: "/images/memory1.png", alt: "Memory 1" },
+    { src: "/images/memory2.jpg", alt: "Memory 2" },
+    { src: "/images/memory3.jpg", alt: "Memory 3" },
+    { src: "/images/memory4.jpg", alt: "Memory 4" },
   ];
+
+  // Rotation per image: 0 = -90°, 1 = +90°, 2 = -90°, 3 = 0°
+  const photoRotations = [-90, 90, -90, 0];
 
   // Reveal photos with GSAP when page becomes active
   useEffect(() => {
     if (isActive && !photosRevealed) {
       setTimeout(() => setPhotosRevealed(true), 10);
 
-      // Stagger animation for photos
-      gsap.fromTo(
-        photosRef.current,
-        {
-          opacity: 0,
-          y: 50,
-          scale: 0.8,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.6,
-          stagger: 0.12,
-          ease: "back.out(1.4)",
-          delay: 0.2,
-        }
-      );
+      const els = photosRef.current;
+      els.forEach((el, i) => {
+        if (!el) return;
+        const rotation = photoRotations[i] ?? 0;
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 50, scale: 0.8, rotation },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotation,
+            duration: 0.6,
+            ease: "back.out(1.4)",
+            delay: 0.2 + i * 0.12,
+          }
+        );
+      });
     }
   }, [isActive, photosRevealed]);
 
@@ -139,12 +140,19 @@ function Gallery({ isActive }) {
 
   return (
     <section className="gallery">
-      <h2>📸 Our Beautiful Memories</h2>
+      <h2> Some best Glimpse of You</h2>
       <div className="photos">
         {photos.map((photo, index) => (
           <img
             key={index}
             ref={(el) => (photosRef.current[index] = el)}
+            className={
+              photoRotations[index] === -90
+                ? "photo-rotate-left"
+                : photoRotations[index] === 90
+                  ? "photo-rotate-right"
+                  : ""
+            }
             src={photo.src}
             alt={photo.alt}
             onClick={() => openLightbox(index)}
@@ -157,6 +165,13 @@ function Gallery({ isActive }) {
         <div className="lightbox" onClick={closeLightbox}>
           <img
             ref={lightboxImgRef}
+            className={
+              photoRotations[currentIndex] === -90
+                ? "photo-rotate-left"
+                : photoRotations[currentIndex] === 90
+                  ? "photo-rotate-right"
+                  : ""
+            }
             src={photos[currentIndex].src}
             alt={photos[currentIndex].alt}
             onClick={(e) => e.stopPropagation()}
@@ -167,26 +182,6 @@ function Gallery({ isActive }) {
             aria-label="Close lightbox"
           >
             ✖
-          </button>
-          <button
-            className="nav-btn nav-prev"
-            onClick={(e) => {
-              e.stopPropagation();
-              showPrev();
-            }}
-            aria-label="Previous photo"
-          >
-            ‹
-          </button>
-          <button
-            className="nav-btn nav-next"
-            onClick={(e) => {
-              e.stopPropagation();
-              showNext();
-            }}
-            aria-label="Next photo"
-          >
-            ›
           </button>
         </div>
       )}
