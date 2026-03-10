@@ -564,10 +564,10 @@
 .cake-container {
   position: absolute;
   bottom: 20px;
+  top: 67%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 4;
-  opacity: 0;
 }
 
 .cake {

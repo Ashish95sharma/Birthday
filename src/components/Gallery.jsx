@@ -183,13 +183,7 @@ function Gallery({ isActive, onBack }) {
           >
             <img
               ref={lightboxImgRef}
-              className={
-                photoRotations[currentIndex] === -90
-                  ? "photo-rotate-left"
-                  : photoRotations[currentIndex] === 90
-                    ? "photo-rotate-right"
-                    : ""
-              }
+              className="lightbox-img"
               src={photos[currentIndex].src}
               alt={photos[currentIndex].alt}
             />
