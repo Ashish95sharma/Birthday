@@ -200,7 +200,7 @@
 .lightbox-close {
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 20px;
   background: rgba(255, 255, 255, 0.1);
   color: white;
   border: none;
@@ -302,7 +302,7 @@
     height: 45px;
     font-size: 1.6rem;
     top: 15px;
-    right: 15px;
+    left: 15px;
   }
 
   .lightbox {
@@ -351,7 +351,7 @@
     height: 42px;
     font-size: 1.5rem;
     top: 12px;
-    right: 12px;
+    left: 12px;
   }
 }
 
