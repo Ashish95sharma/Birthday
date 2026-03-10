@@ -224,10 +224,7 @@ function App() {
         style={{ visibility: currentPage === 4 ? "visible" : "hidden" }}
       >
         <div className="page-card page-card-gallery">
-          <button className="back-btn" onClick={() => goToPage(3)}>
-            ← Back
-          </button>
-          <Gallery isActive={currentPage === 4} />
+          <Gallery isActive={currentPage === 4} onBack={() => goToPage(3)} />
           <section className="final">
             <h2 className="final-message">💖  Happy Birthday Shruti 💖</h2>
            

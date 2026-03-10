@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./Gallery.css";
 
-function Gallery({ isActive }) {
+function Gallery({ isActive, onBack }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [photosRevealed, setPhotosRevealed] = useState(false);
@@ -50,7 +50,7 @@ function Gallery({ isActive }) {
     setCurrentIndex(index);
     setLightboxOpen(true);
 
-    // Animate lightbox appearance
+    // Animate lightbox appearancex
     if (lightboxImgRef.current) {
       gsap.fromTo(
         lightboxImgRef.current,
@@ -76,6 +76,14 @@ function Gallery({ isActive }) {
       document.body.style.overflow = "";
     };
   }, [lightboxOpen]);
+
+  const handleBackClick = () => {
+    if (lightboxOpen) {
+      closeLightbox();
+    } else if (onBack) {
+      onBack();
+    }
+  };
 
   const showNext = useCallback(() => {
     const newIndex = (currentIndex + 1) % photos.length;
@@ -140,42 +148,53 @@ function Gallery({ isActive }) {
 
   return (
     <section className="gallery">
-      <h2> Some best Glimpse of You</h2>
-      <div className="photos">
-        {photos.map((photo, index) => (
-          <img
-            key={index}
-            ref={(el) => (photosRef.current[index] = el)}
-            className={
-              photoRotations[index] === -90
-                ? "photo-rotate-left"
-                : photoRotations[index] === 90
-                  ? "photo-rotate-right"
-                  : ""
-            }
-            src={photo.src}
-            alt={photo.alt}
-            onClick={() => openLightbox(index)}
-            loading="lazy"
-          />
-        ))}
-      </div>
-
+      <button className="back-btn" onClick={handleBackClick}>
+        ← Back
+      </button>
+      {!lightboxOpen && (
+        <>
+          <h2> Some best Glimpse of You</h2>
+          <div className="photos">
+            {photos.map((photo, index) => (
+              <img
+                key={index}
+                ref={(el) => (photosRef.current[index] = el)}
+                className={
+                  photoRotations[index] === -90
+                    ? "photo-rotate-left"
+                    : photoRotations[index] === 90
+                      ? "photo-rotate-right"
+                      : ""
+                }
+                src={photo.src}
+                alt={photo.alt}
+                onClick={() => openLightbox(index)}
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </>
+      )}
       {lightboxOpen && (
         <div className="lightbox" onClick={closeLightbox}>
-          <img
-            ref={lightboxImgRef}
-            className={
-              photoRotations[currentIndex] === -90
-                ? "photo-rotate-left"
-                : photoRotations[currentIndex] === 90
-                  ? "photo-rotate-right"
-                  : ""
-            }
-            src={photos[currentIndex].src}
-            alt={photos[currentIndex].alt}
+          <div
+            className="lightbox-content"
             onClick={(e) => e.stopPropagation()}
-          />
+          >
+            <img
+              ref={lightboxImgRef}
+              className={
+                photoRotations[currentIndex] === -90
+                  ? "photo-rotate-left"
+                  : photoRotations[currentIndex] === 90
+                    ? "photo-rotate-right"
+                    : ""
+              }
+              src={photos[currentIndex].src}
+              alt={photos[currentIndex].alt}
+            />
+            <p className="lightbox-caption">{photos[currentIndex].alt}</p>
+          </div>
           <button
             className="lightbox-close"
             onClick={closeLightbox}

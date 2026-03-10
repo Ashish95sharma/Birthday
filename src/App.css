@@ -152,7 +152,7 @@
   max-width: 960px;
   min-height: min(88vh, 720px);
   border-radius: 32px;
-  padding: 28px 26px 32px;
+  padding: 90px 26px 32px;
   background:
     radial-gradient(
         circle at top left,
@@ -188,6 +188,11 @@
 .page-card-gallery,
 .page-card-celebration {
   position: relative;
+}
+
+/* Keep larger top padding only for gallery page */
+.page-card-gallery {
+  padding-top: 138px;
 }
 
 .page-card::before {

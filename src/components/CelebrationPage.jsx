@@ -18,7 +18,6 @@ function CelebrationPage({ onComplete, musicPlayerRef }) {
   const [showButtons, setShowButtons] = useState(false);
   const [activatedButtons, setActivatedButtons] = useState({
     lights: false,
-    music: false,
     decorate: false,
     balloons: false,
     message: false,
@@ -94,8 +93,7 @@ function CelebrationPage({ onComplete, musicPlayerRef }) {
 
   // Determine which buttons to show based on activation state
   const showLightsButton = true; // Always show first button
-  const showMusicButton = activatedButtons.lights; // Show after lights is clicked
-  const showDecorateButton = activatedButtons.music; // Show after music is clicked
+  const showDecorateButton = activatedButtons.lights; // Show after lights is clicked
   const showBalloonsButton = activatedButtons.decorate; // Show after decorate is clicked
   const showMessageButton = activatedButtons.balloons; // Show after balloons is clicked
 
@@ -205,14 +203,12 @@ function CelebrationPage({ onComplete, musicPlayerRef }) {
         duration: 1.5,
         ease: "power2.inOut",
       });
-      return;
-    }
 
-    // Special handling for music button - play the actual music
-    if (buttonType === "music") {
+      // Auto-play music when lights are turned on
       if (musicPlayerRef && musicPlayerRef.current) {
         musicPlayerRef.current.play();
       }
+      return;
     }
 
     // Show corresponding decoration with animations
@@ -376,17 +372,6 @@ function CelebrationPage({ onComplete, musicPlayerRef }) {
                 </button>
               )}
 
-              {/* Music Button - Shows after lights, hides after click */}
-              {showMusicButton && !activatedButtons.music && (
-                <button
-                  className="action-button music-button"
-                  data-button="music"
-                  onClick={() => handleButtonClick("music")}
-                >
-                  🎵 Play Music
-                </button>
-              )}
-
               {/* Decorate Button - Shows after music is clicked, hides after click */}
               {showDecorateButton && !activatedButtons.decorate && (
                 <button
@@ -471,7 +456,7 @@ function CelebrationPage({ onComplete, musicPlayerRef }) {
             )}
 
             {/* Cake decoration - center */}
-            {activatedButtons.music && (
+            {activatedButtons.decorate && (
               <div className="decoration-music cake-container">
                 <div className="cake">
                   <div className="cake-layer layer-3"></div>
